@@ -2,11 +2,6 @@
 	"name"       : "persei/persei-api",
 	"license"    : "proprietary",
 	"type"       : "Api",
-	"autoload"   : {
-		"psr-4": {
-			"": "src/"
-		}
-	},
 	"require"    : {
 		"php"                                 : ">=7.1",
 		"friendsofsymfony/oauth-server-bundle": "^1.5",
