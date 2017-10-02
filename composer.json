@@ -1,0 +1,25 @@
+{
+	"name"       : "persei/persei-api",
+	"license"    : "proprietary",
+	"type"       : "Api",
+	"autoload"   : {
+		"psr-4": {
+			"": "src/"
+		}
+	},
+	"require"    : {
+		"php"                                 : ">=7.1",
+		"friendsofsymfony/oauth-server-bundle": "^1.5",
+		"friendsofsymfony/rest-bundle"        : "^2.2",
+		"knplabs/knp-paginator-bundle"        : "^2.5",
+		"willdurand/hateoas-bundle"           : "^1.2",
+		"doctrine/doctrine-bundle"            : "^1.6",
+		"nelmio/api-doc-bundle"               : "^2.13",
+		"symfony/symfony"                     : "3.3.*",
+		"doctrine/orm"                        : "^2.5"
+	},
+	"require-dev": {
+		"sensio/generator-bundle": "^3.0",
+		"symfony/phpunit-bridge" : "^3.0"
+	}
+}
