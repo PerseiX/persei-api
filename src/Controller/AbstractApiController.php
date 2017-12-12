@@ -30,6 +30,7 @@ abstract class AbstractApiController extends FOSRestController
 	 */
 	protected function paginatedResponse($class, Query $query, PaginatedRequest $paginatedRequest, $parameters = [])
 	{
+		//TODO limit and page default value
 		$limit = $paginatedRequest->getLimit();
 		$page  = $paginatedRequest->getPage();
 
@@ -40,13 +41,18 @@ abstract class AbstractApiController extends FOSRestController
 
 		$representation = $this->get('api.main_transformer')->transform(new $class($pagination->getItems()));
 
+		//TODO maybe builder?
 		$paginatedRepresentation = new PaginatedRepresentation(
 			$representation,
 			$paginatedRequest->getRouter(),
 			$parameters,
 			$page,
 			$limit,
-			ceil($pagination->getTotalItemCount() / $limit)
+			ceil($pagination->getTotalItemCount() / $limit),
+			null,
+			null,
+			false,
+			$pagination->getTotalItemCount()
 		);
 
 		return $this->representationResponse($paginatedRepresentation);
