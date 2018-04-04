@@ -3,24 +3,24 @@
 	"license"    : "proprietary",
 	"type"       : "Api",
 	"require"    : {
-		"php"                                 : ">=7.1",
-		"friendsofsymfony/oauth-server-bundle": "^1.5",
+		"friendsofsymfony/oauth-server-bundle": "1.6.x-dev",
 		"friendsofsymfony/rest-bundle"        : "^2.2",
 		"knplabs/knp-paginator-bundle"        : "^2.7",
 		"willdurand/hateoas-bundle"           : "^1.2",
-		"doctrine/doctrine-bundle"            : "^1.6",
-		"nelmio/api-doc-bundle"               : "^2.13",
-		"symfony/symfony"                     : "3.3.*",
+		"doctrine/doctrine-bundle"            : "^1.8",
+		"nelmio/api-doc-bundle"               : "^3.2",
+		"symfony/symfony"                     : "^4.0",
 		"phpunit/phpunit"                     : "^6.3",
 		"doctrine/orm"                        : "^2.5"
-	},
-	"require-dev": {
-		"sensio/generator-bundle": "^3.0",
-		"symfony/phpunit-bridge" : "^3.0"
 	},
 	"autoload"   : {
 		"psr-4": {
 			"ApiBundle\\": "src/"
+		}
+	},
+	"config": {
+		"platform": {
+			"php": "7.1.15"
 		}
 	}
 }
