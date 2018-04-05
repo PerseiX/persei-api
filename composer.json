@@ -9,7 +9,6 @@
 		"willdurand/hateoas-bundle"           : "^1.2",
 		"doctrine/doctrine-bundle"            : "^1.8",
 		"nelmio/api-doc-bundle"               : "^3.2",
-		"symfony/symfony"                     : "^4.0",
 		"phpunit/phpunit"                     : "^6.3",
 		"doctrine/orm"                        : "^2.5"
 	},
