@@ -78,7 +78,7 @@ class Transformer
 				return $transformer;
 			}
 		}
-		throw new NotFoundResourceException(sprintf('Looked for transformer %s doesn\'t found!"', get_class($input)));
+		throw new NotFoundResourceException(sprintf('Looked for transformer %s doesn\'t found!"', null === $input ? null : get_class($input)));
 	}
 
 	/**
