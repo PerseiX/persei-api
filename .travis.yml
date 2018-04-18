@@ -1,7 +1,7 @@
 language: php
 php:
-    - 7.0
     - 7.1
+    - 7.2
 #before_install:
 #    - php /home/travis/.phpenv/versions/5.4.25/bin/composer.phar self-update
 #before_script:
