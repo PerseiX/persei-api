@@ -78,7 +78,7 @@ class Transformer
 				return $transformer;
 			}
 		}
-		throw new NotFoundHttpException(sprintf('Looked for transformer %s doesn\'t found!"', null === $input ? null : get_class($input)));
+		throw new NotFoundHttpException(sprintf('Looked for transformer doesn\'t found!"'));
 	}
 
 	/**
