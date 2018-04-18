@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace ApiBundle\Transformer;
 
-use Symfony\Component\Translation\Exception\NotFoundResourceException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use ApiBundle\Representation\RepresentationInterface;
 use ApiBundle\Transformer\Scope\ScopeRepository;
 use ApiBundle\Transformer\Scope\ScopeInterface;
@@ -78,7 +78,7 @@ class Transformer
 				return $transformer;
 			}
 		}
-		throw new NotFoundResourceException(sprintf('Looked for transformer %s doesn\'t found!"', null === $input ? null : get_class($input)));
+		throw new NotFoundHttpException(sprintf('Looked for transformer %s doesn\'t found!"', null === $input ? null : get_class($input)));
 	}
 
 	/**

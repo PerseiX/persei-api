@@ -2,6 +2,7 @@
 
 namespace ApiBundle\Transformer;
 
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Translation\Exception\NotFoundResourceException;
 use ApiBundle\Representation\RepresentationInterface;
 use ApiBundle\Transformer\Scope\ScopeRepository;
@@ -134,7 +135,7 @@ class TransformerTest extends TestCase
 
 	public function testEmptyTransformers()
 	{
-		$this->expectException(NotFoundResourceException::class);
+		$this->expectException(NotFoundHttpException::class);
 		$this->transformer->getTransformer(null);
 	}
 
