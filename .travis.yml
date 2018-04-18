@@ -10,4 +10,4 @@ install:
     - composer install
 
 script:
-    - phpunit --configuration phpunit.xml --coverage-text
+    - phpunit --configuration phpunit.xml.dist --coverage-text
