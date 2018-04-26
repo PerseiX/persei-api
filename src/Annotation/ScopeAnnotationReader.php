@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace ApiBundle\Annotation;
 
+use ApiBundle\Reflection\AnnotationsReader;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use ApiBundle\Transformer\Scope\AllowedScopesRepository;
@@ -18,9 +19,9 @@ use Doctrine\Common\Annotations\Reader;
 class ScopeAnnotationReader implements EventSubscriberInterface
 {
 	/**
-	 * @var Reader
+	 * @var AnnotationsReader
 	 */
-	private $reader;
+	private $annotationReader;
 
 	/**
 	 * @var AllowedScopesRepository
@@ -35,13 +36,13 @@ class ScopeAnnotationReader implements EventSubscriberInterface
 	/**
 	 * ScopeAnnotationReader constructor.
 	 *
-	 * @param Reader                  $reader
+	 * @param AnnotationsReader       $annotationReader
 	 * @param AllowedScopesRepository $allowedScopeRepository
 	 * @param ScopeRepository         $scopeRepository
 	 */
-	public function __construct(Reader $reader, AllowedScopesRepository $allowedScopeRepository, ScopeRepository $scopeRepository)
+	public function __construct(AnnotationsReader $annotationReader, AllowedScopesRepository $allowedScopeRepository, ScopeRepository $scopeRepository)
 	{
-		$this->reader                 = $reader;
+		$this->annotationReader       = $annotationReader;
 		$this->allowedScopeRepository = $allowedScopeRepository;
 		$this->scopeRepository        = $scopeRepository;
 	}
@@ -64,17 +65,12 @@ class ScopeAnnotationReader implements EventSubscriberInterface
 	 */
 	public function onKernelController(FilterControllerEvent $event)
 	{
-		if (!is_array($controller = $event->getController())) {
+		if (!is_array($controller = $event->getController()) || true === empty($controller)) {
 			return;
 		}
-
-		$object            = new \ReflectionObject($controller[0]);
-		$method            = $object->getMethod($controller[1]);
-		$methodAnnotations = $this->reader->getMethodAnnotations($method);
-
+		$methodAnnotations = $this->annotationReader->getMethodAnnotations($controller);
 		foreach ($methodAnnotations as $configuration) {
-
-			if (isset($configuration->scope)) {
+			if (true === $configuration instanceof Scope) {
 				/** @var ScopeInterface $scope */
 				foreach ($this->allowedScopeRepository->getAllowedScopes() as $scope) {
 					if ($scope->getScopeName() === $configuration->scope) {

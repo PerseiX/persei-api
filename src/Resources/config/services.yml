@@ -31,4 +31,3 @@ services:
         arguments:
             - '@security.access.decision_manager'
             - '@doctrine.orm.entity_manager'
-

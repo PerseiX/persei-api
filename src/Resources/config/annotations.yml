@@ -4,7 +4,7 @@ services:
         tags:
             - { name: kernel.event_subscriber }
         arguments:
-            - '@annotation_reader'
+            - '@api.annotation_reader'
             - '@api.allowed_scopes_repository'
             - '@api.transformer_scope_repository'
 
@@ -19,3 +19,9 @@ services:
         class: ApiBundle\Documentation\ScopeAnnotationHandler
         tags:
             - { name: nelmio_api_doc.extractor.handler }
+
+
+    api.annotation_reader:
+        class: ApiBundle\Reflection\AnnotationsReader
+        arguments:
+            - '@annotations.reader'

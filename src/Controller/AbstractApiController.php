@@ -42,18 +42,7 @@ abstract class AbstractApiController extends FOSRestController
 		$representation = $this->get('api.main_transformer')->transform(new $class($pagination->getItems()));
 
 		//TODO maybe builder?
-		$paginatedRepresentation = new PaginatedRepresentation(
-			$representation,
-			$paginatedRequest->getRouter(),
-			$parameters,
-			$page,
-			$limit,
-			ceil($pagination->getTotalItemCount() / $limit),
-			null,
-			null,
-			false,
-			$pagination->getTotalItemCount()
-		);
+		$paginatedRepresentation = $this->paginatedRequest($paginatedRequest, $parameters, $representation, $page, $limit, $pagination);
 
 		return $this->representationResponse($paginatedRepresentation);
 	}
@@ -179,4 +168,32 @@ abstract class AbstractApiController extends FOSRestController
 	{
 		return $representation = $this->get('api.main_transformer')->transform($input);
 	}
+
+	/**
+	 * @param PaginatedRequest $paginatedRequest
+	 * @param                  $parameters
+	 * @param                  $representation
+	 * @param                  $page
+	 * @param                  $limit
+	 * @param                  $pagination
+	 *
+	 * @return PaginatedRepresentation
+	 */
+	protected function paginatedRequest(PaginatedRequest $paginatedRequest, $parameters, $representation, $page, $limit, $pagination): PaginatedRepresentation
+	{
+		$paginatedRepresentation = new PaginatedRepresentation(
+			$representation,
+			$paginatedRequest->getRouter(),
+			$parameters,
+			$page,
+			$limit,
+			ceil($pagination->getTotalItemCount() / $limit),
+			null,
+			null,
+			false,
+			$pagination->getTotalItemCount()
+		);
+
+		return $paginatedRepresentation;
+}
 }

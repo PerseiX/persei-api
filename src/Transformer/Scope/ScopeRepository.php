@@ -63,6 +63,20 @@ class ScopeRepository
 	}
 
 	/**
+	 * @param string $scopeName
+	 *
+	 * @return bool
+	 */
+	public function hasSupportedScope(string $scopeName)
+	{
+		if (key_exists($scopeName, $this->supportedScopes)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
 	 * @return array
 	 */
 	public function getSupportedScopes(): array
