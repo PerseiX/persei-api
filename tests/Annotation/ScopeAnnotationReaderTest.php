@@ -42,41 +42,30 @@ class ScopeAnnotationReaderTest extends TestCase
 		$this->reader                  = new ScopeAnnotationReader($this->annotationReader, $this->allowedScopesRepository, $this->scopeRepository);
 	}
 
-	public function testOnKernelController()
+	public function testShouldEmptyWhenAnyControllers()
 	{
 		/** @var FilterControllerEvent $event */
 		$event = $this->createMock(FilterControllerEvent::class);
-		$event->expects($this->once())
-		      ->method('getController')
+		$event->method('getController')
 		      ->willReturn('');
 
 		$result = $this->reader->onKernelController($event);
 		$this->assertTrue(empty($result));
+	}
 
+	public function testShouldAddOnlyScopesFromReflections()
+	{
 		/** @var FilterControllerEvent $event */
 		$event = $this->createMock(FilterControllerEvent::class);
-
-		$event->expects($this->once())
-		      ->method('getController')
-		      ->willReturn([]);
-
-		$result = $this->reader->onKernelController($event);
-		$this->assertTrue(empty($result));
-
-		/** @var FilterControllerEvent $event */
-		$event = $this->createMock(FilterControllerEvent::class);
-		$event->expects($this->once())
-		      ->method('getController')
+		$event->method('getController')
 		      ->willReturn(['']);
 
 		$scope        = $this->createMock(Scope::class);
 		$scope->scope = 'test.scope';
 		$scope->value = 'test.value';
 
-		$this->annotationReader
-			->expects($this->once())
-			->method('getMethodAnnotations')
-			->willReturn([$scope]);
+		$this->annotationReader->method('getMethodAnnotations')
+		                       ->willReturn([$scope]);
 
 		$passedScope = $this->createMock(ScopeInterface::class);
 		$passedScope->method('getScopeName')
@@ -88,5 +77,20 @@ class ScopeAnnotationReaderTest extends TestCase
 		$this->assertTrue($this->scopeRepository->hasSupportedScope('test.scope'));
 		$this->assertFalse($this->scopeRepository->hasSupportedScope('fake.scope'));
 		$this->assertCount(1, $this->scopeRepository->getSupportedScopes());
+	}
+
+	public function testShouldSupportOnlyScope()
+	{
+		/** @var FilterControllerEvent $event */
+		$event = $this->createMock(FilterControllerEvent::class);
+		$event->method('getController')
+		      ->willReturn(['']);
+
+		$this->annotationReader
+			->method('getMethodAnnotations')
+			->willReturn([]);
+
+		$this->reader->onKernelController($event);
+		$this->assertEmpty($this->scopeRepository->getScopes());
 	}
 }
