@@ -1,6 +1,6 @@
 services:
-    api.scope_annotation_reader:
-        class: ApiBundle\Annotation\ScopeAnnotationReader
+    api.scope_listener_reader:
+        class: ApiBundle\Listener\ScopeAnnotationReaderListener
         tags:
             - { name: kernel.event_subscriber }
         arguments:
@@ -9,7 +9,7 @@ services:
             - '@api.transformer_scope_repository'
 
     api.scope_listener:
-        class: ApiBundle\Annotation\ScopeListener
+        class: ApiBundle\Listener\ScopeListener
         tags:
             - { name: kernel.event_subscriber }
         arguments:

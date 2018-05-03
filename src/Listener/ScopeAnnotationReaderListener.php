@@ -1,22 +1,22 @@
 <?php
 declare(strict_types=1);
 
-namespace ApiBundle\Annotation;
+namespace ApiBundle\Listener;
 
-use ApiBundle\Reflection\AnnotationsReader;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use ApiBundle\Transformer\Scope\AllowedScopesRepository;
 use ApiBundle\Transformer\Scope\ScopeRepository;
 use ApiBundle\Transformer\Scope\ScopeInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Doctrine\Common\Annotations\Reader;
+use ApiBundle\Reflection\AnnotationsReader;
+use ApiBundle\Annotation\Scope;
 
 /**
  * Class ScopeAnnotationReader
  * @package ApiBundle\Annotation
  */
-class ScopeAnnotationReader implements EventSubscriberInterface
+class ScopeAnnotationReaderListener implements EventSubscriberInterface
 {
 	/**
 	 * @var AnnotationsReader

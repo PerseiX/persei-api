@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace ApiBundle\Annotation;
+namespace ApiBundle\Listener;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
@@ -38,7 +38,7 @@ class ScopeListener implements EventSubscriberInterface
 		return [
 			KernelEvents:: CONTROLLER =>
 				[
-					['applyWidthParameter', -1]
+					['applyWithParameter', -1]
 				]
 		];
 	}
@@ -46,7 +46,7 @@ class ScopeListener implements EventSubscriberInterface
 	/**
 	 * @param FilterControllerEvent $event
 	 */
-	public function applyWidthParameter(FilterControllerEvent $event)
+	public function applyWithParameter(FilterControllerEvent $event)
 	{
 		if (!$withs = $event->getRequest()->get('with')) {
 			return;

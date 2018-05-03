@@ -1,7 +1,8 @@
 <?php
 
-namespace ApiBundle\Annotation;
+namespace ApiBundle\Listener;
 
+use ApiBundle\Annotation\Scope;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use ApiBundle\Transformer\Scope\AllowedScopesRepository;
 use ApiBundle\Transformer\Scope\ScopeRepository;
@@ -15,7 +16,7 @@ use PHPUnit\Framework\TestCase;
 class ScopeAnnotationReaderTest extends TestCase
 {
 	/**
-	 * @var ScopeAnnotationReader
+	 * @var ScopeAnnotationReaderListener
 	 */
 	private $reader;
 
@@ -39,7 +40,7 @@ class ScopeAnnotationReaderTest extends TestCase
 		$this->annotationReader        = $this->createMock(AnnotationsReader::class);
 		$this->allowedScopesRepository = new AllowedScopesRepository();
 		$this->scopeRepository         = new ScopeRepository();
-		$this->reader                  = new ScopeAnnotationReader($this->annotationReader, $this->allowedScopesRepository, $this->scopeRepository);
+		$this->reader                  = new ScopeAnnotationReaderListener($this->annotationReader, $this->allowedScopesRepository, $this->scopeRepository);
 	}
 
 	public function testShouldEmptyWhenAnyControllers()
