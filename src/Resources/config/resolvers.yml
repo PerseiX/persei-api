@@ -4,6 +4,7 @@ services:
 
     paginated_request.resolver:
         class: ApiBundle\Resolver\PaginatedRequestResolver
+        public: true
         arguments:
             - '@paginated_request'
         tags:

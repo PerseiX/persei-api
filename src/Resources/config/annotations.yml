@@ -1,6 +1,7 @@
 services:
     api.scope_listener_reader:
         class: ApiBundle\Listener\ScopeAnnotationReaderListener
+        public: true
         tags:
             - { name: kernel.event_subscriber }
         arguments:
@@ -10,6 +11,7 @@ services:
 
     api.scope_listener:
         class: ApiBundle\Listener\ScopeListener
+        public: true
         tags:
             - { name: kernel.event_subscriber }
         arguments:
@@ -17,11 +19,13 @@ services:
 
     api.nelmio_api_doc.scope_handler:
         class: ApiBundle\Documentation\ScopeAnnotationHandler
+        public: true
         tags:
             - { name: nelmio_api_doc.extractor.handler }
 
 
     api.annotation_reader:
         class: ApiBundle\Reflection\AnnotationsReader
+        public: true
         arguments:
             - '@annotations.reader'

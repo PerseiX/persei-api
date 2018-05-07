@@ -36,7 +36,7 @@ class ScopeListener implements EventSubscriberInterface
 	public static function getSubscribedEvents()
 	{
 		return [
-			KernelEvents:: CONTROLLER =>
+			KernelEvents::CONTROLLER =>
 				[
 					['applyWithParameter', -1]
 				]
