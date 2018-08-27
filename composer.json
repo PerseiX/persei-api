@@ -3,7 +3,7 @@
 	"license"    : "proprietary",
 	"type"       : "Api",
 	"require"    : {
-		"friendsofsymfony/oauth-server-bundle": "1.6.x-dev",
+		"friendsofsymfony/oauth-server-bundle": "1.6.*",
 		"friendsofsymfony/rest-bundle"        : "^2.2",
 		"knplabs/knp-paginator-bundle"        : "^2.7",
 		"willdurand/hateoas-bundle"           : "^1.2",
