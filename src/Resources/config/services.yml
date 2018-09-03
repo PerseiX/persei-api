@@ -33,3 +33,25 @@ services:
         arguments:
             - '@security.access.decision_manager'
             - '@doctrine.orm.entity_manager'
+
+    #Form Type
+    api.form_type_persei_file_type:
+        class: ApiBundle\Form\Type\PerseiFileType
+        tags:
+            - { name: form.type }
+
+    api.form_extension_persei_file_type:
+        class: ApiBundle\Form\Extension\PerseiFileTypeExtension
+        tags:
+            - { name: form.type_extension, extended_type: ApiBundle\Form\Type\PerseiFileType }
+
+    api.form_handler_persei_file_handler:
+        class: ApiBundle\Form\Handler\PerseiFileHandler
+        arguments:
+            - '@api.managger_file_manager'
+        public: true
+
+    api.managger_file_manager:
+        class: ApiBundle\Manager\FileManager
+        arguments:
+            - '%kernel.project_dir%'

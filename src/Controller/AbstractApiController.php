@@ -7,6 +7,7 @@ use Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination;
 use ApiBundle\Representation\RepresentationInterface;
 use Hateoas\Representation\PaginatedRepresentation;
 use FOS\RestBundle\Controller\FOSRestController;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use ApiBundle\Request\PaginatedRequest;
@@ -79,27 +80,31 @@ abstract class AbstractApiController extends FOSRestController
 	 */
 	protected function formResponse(Request $request, Form $form)
 	{
+
 		$form->handleRequest($request);
 
-		$clearMissing = true;
+		$clearMissing = false;
 		if ('PUT' === $request->getMethod()) {
 			$clearMissing = false;
 		}
 
 		if (false === $form->isSubmitted()) {
-			$form->submit($request->request->all(), $clearMissing);
+			$requestData = array_merge($request->request->all(), $request->files->all());
+			$form->submit($requestData, $clearMissing);
 		}
 
 		if (true === $form->isValid()) {
 			$manager = $this->getDoctrine()->getManager();
 			$manager->beginTransaction();
 			try {
+				$this->get('api.form_handler_persei_file_handler')->handle($form);
 				$input = $form->getData();
 
 				$manager->persist($input);
 				$manager->flush();
 				$manager->commit();
-			} catch (ORMException $exception) {
+			} catch
+			(ORMException $exception) {
 				$manager->rollback();
 				throw $exception;
 			}
@@ -115,7 +120,8 @@ abstract class AbstractApiController extends FOSRestController
 	 *
 	 * @return Response
 	 */
-	protected function formErrorsResponse(Form $form)
+	protected
+	function formErrorsResponse(Form $form)
 	{
 		$view = $this->view($this->getErrorMessages($form), 400);
 
@@ -127,7 +133,8 @@ abstract class AbstractApiController extends FOSRestController
 	 *
 	 * @return array
 	 */
-	protected function getErrorMessages(Form $form)
+	protected
+	function getErrorMessages(Form $form)
 	{
 		$errors = [];
 
@@ -152,7 +159,8 @@ abstract class AbstractApiController extends FOSRestController
 	/**
 	 * @param $entity
 	 */
-	protected function updateEntity($entity)
+	protected
+	function updateEntity($entity)
 	{
 		$em = $this->getDoctrine()->getManager();
 		$em->persist($entity);
@@ -164,7 +172,8 @@ abstract class AbstractApiController extends FOSRestController
 	 *
 	 * @return RepresentationInterface
 	 */
-	protected function transform($input): RepresentationInterface
+	protected
+	function transform($input): RepresentationInterface
 	{
 		return $representation = $this->get('api.main_transformer')->transform($input);
 	}
@@ -179,7 +188,8 @@ abstract class AbstractApiController extends FOSRestController
 	 *
 	 * @return PaginatedRepresentation
 	 */
-	protected function paginatedRequest(PaginatedRequest $paginatedRequest, $parameters, $representation, $page, $limit, $pagination): PaginatedRepresentation
+	protected
+	function paginatedRequest(PaginatedRequest $paginatedRequest, $parameters, $representation, $page, $limit, $pagination): PaginatedRepresentation
 	{
 		$paginatedRepresentation = new PaginatedRepresentation(
 			$representation,
@@ -195,5 +205,5 @@ abstract class AbstractApiController extends FOSRestController
 		);
 
 		return $paginatedRepresentation;
-}
+	}
 }
