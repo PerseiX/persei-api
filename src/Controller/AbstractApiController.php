@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace ApiBundle\Controller;
 
+use ApiBundle\Event\FormRepresentationEvent;
 use Knp\Bundle\PaginatorBundle\Pagination\SlidingPagination;
 use ApiBundle\Representation\RepresentationInterface;
 use Hateoas\Representation\PaginatedRepresentation;
@@ -108,8 +109,12 @@ abstract class AbstractApiController extends FOSRestController
 				$manager->rollback();
 				throw $exception;
 			}
+			$dispatcher     = $this->get('event_dispatcher');
+			$representation = $this->get('api.main_transformer')->transform($input);
+			$event          = new FormRepresentationEvent($representation);
+			$dispatcher->dispatch(FormRepresentationEvent::POST_SUCCESS_REPRESENTATION, $event);
 
-			return $this->representationResponse($this->get('api.main_transformer')->transform($input));
+			return $this->representationResponse($representation);
 		}
 
 		return $this->formErrorsResponse($form);
@@ -120,8 +125,7 @@ abstract class AbstractApiController extends FOSRestController
 	 *
 	 * @return Response
 	 */
-	protected
-	function formErrorsResponse(Form $form)
+	protected function formErrorsResponse(Form $form)
 	{
 		$view = $this->view($this->getErrorMessages($form), 400);
 
@@ -133,8 +137,7 @@ abstract class AbstractApiController extends FOSRestController
 	 *
 	 * @return array
 	 */
-	protected
-	function getErrorMessages(Form $form)
+	protected function getErrorMessages(Form $form)
 	{
 		$errors = [];
 
@@ -159,8 +162,7 @@ abstract class AbstractApiController extends FOSRestController
 	/**
 	 * @param $entity
 	 */
-	protected
-	function updateEntity($entity)
+	protected function updateEntity($entity)
 	{
 		$em = $this->getDoctrine()->getManager();
 		$em->persist($entity);
@@ -172,8 +174,7 @@ abstract class AbstractApiController extends FOSRestController
 	 *
 	 * @return RepresentationInterface
 	 */
-	protected
-	function transform($input): RepresentationInterface
+	protected function transform($input): RepresentationInterface
 	{
 		return $representation = $this->get('api.main_transformer')->transform($input);
 	}
@@ -188,8 +189,7 @@ abstract class AbstractApiController extends FOSRestController
 	 *
 	 * @return PaginatedRepresentation
 	 */
-	protected
-	function paginatedRequest(PaginatedRequest $paginatedRequest, $parameters, $representation, $page, $limit, $pagination): PaginatedRepresentation
+	protected function paginatedRequest(PaginatedRequest $paginatedRequest, $parameters, $representation, $page, $limit, $pagination): PaginatedRepresentation
 	{
 		$paginatedRepresentation = new PaginatedRepresentation(
 			$representation,
