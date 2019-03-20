@@ -14,7 +14,7 @@ class AbstractModelCollectionTest extends TestCase
 	 */
 	private $mock;
 
-    protected function setUp()
+    protected function setUp(): void
 	{
 		$this->mock = $this->getMockBuilder(AbstractModelCollection::class)
 		                   ->setConstructorArgs([[]])

@@ -9,17 +9,12 @@
 		"willdurand/hateoas-bundle"           : "^1.2",
 		"doctrine/doctrine-bundle"            : "^1.8",
 		"nelmio/api-doc-bundle"               : "^3.2",
-		"phpunit/phpunit"                     : "^6.3",
+		"phpunit/phpunit"                     : "^8.0",
 		"doctrine/orm"                        : "^2.5"
 	},
 	"autoload"   : {
 		"psr-4": {
 			"ApiBundle\\": "src/"
-		}
-	},
-	"config": {
-		"platform": {
-			"php": "7.1.15"
 		}
 	}
 }

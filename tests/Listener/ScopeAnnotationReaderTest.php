@@ -35,7 +35,7 @@ class ScopeAnnotationReaderTest extends TestCase
 	 */
 	private $scopeRepository;
 
-    protected function setUp()
+    protected function setUp(): void
 	{
 		$this->annotationReader        = $this->createMock(AnnotationsReader::class);
 		$this->allowedScopesRepository = new AllowedScopesRepository();

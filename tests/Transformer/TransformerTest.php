@@ -2,12 +2,11 @@
 
 namespace ApiBundle\Transformer;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Translation\Exception\NotFoundResourceException;
 use ApiBundle\Representation\RepresentationInterface;
 use ApiBundle\Transformer\Scope\ScopeRepository;
 use ApiBundle\Transformer\Scope\ScopeInterface;
-use PHPUnit_Framework_MockObject_MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -16,21 +15,21 @@ use PHPUnit\Framework\TestCase;
 class TransformerTest extends TestCase
 {
 	/**
-	 * @var PHPUnit_Framework_MockObject_MockObject|Transformer
+	 * @var MockObject|Transformer
 	 */
 	private $transformer;
 
 	/**
-	 * @var PHPUnit_Framework_MockObject_MockObject|TransformerInterface
+	 * @var MockObject|TransformerInterface
 	 */
 	private $mockTransformer;
 
 	/**
-	 * @var PHPUnit_Framework_MockObject_MockObject|ScopeRepository
+	 * @var MockObject|ScopeRepository
 	 */
 	private $scopeRepository;
 
-    protected function setUp()
+    protected function setUp(): void
 	{
 
 		$this->scopeRepository = $this->createMock(ScopeRepository::class);
