@@ -15,7 +15,7 @@ class AbstractTransformerTest extends TestCase
 	 */
 	private $mock;
 
-	public function setUp()
+    protected function setUp()
 	{
 		$this->mock = $this->getMockForAbstractClass(AbstractTransformer::class);
 	}

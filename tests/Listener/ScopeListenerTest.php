@@ -35,7 +35,7 @@ class ScopeListenerTest extends TestCase
 	 */
 	private $request;
 
-	public function setUp()
+    protected function setUp()
 	{
 		$this->request         = $this->createMock(Request::class);
 		$this->event           = $this->createMock(FilterControllerEvent::class);

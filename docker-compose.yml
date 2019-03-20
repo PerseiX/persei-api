@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+    php:
+        build: docker/build
+        volumes:
+            - ./:/var/www/html/persei-api
+            - ./docker/build/install.sh/:/var/www/html/persei-api/install.sh
+        ports:
+            - "9001:9000"
+        command: ./install.sh

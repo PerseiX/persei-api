@@ -30,7 +30,7 @@ class TransformerTest extends TestCase
 	 */
 	private $scopeRepository;
 
-	public function setUp()
+    protected function setUp()
 	{
 
 		$this->scopeRepository = $this->createMock(ScopeRepository::class);
