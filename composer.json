@@ -1,7 +1,7 @@
 {
 	"name"       : "persei/persei-api",
 	"license"    : "proprietary",
-	"type"       : "Api",
+	"type"       : "api",
 	"require"    : {
 		"friendsofsymfony/oauth-server-bundle": "1.6.*",
 		"friendsofsymfony/rest-bundle"        : "^2.2",
