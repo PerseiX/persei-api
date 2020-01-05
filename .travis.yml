@@ -3,7 +3,7 @@ php:
     - 7.2
     - 7.3
 install:
-    - composer install
+    - COMPOSER_MEMORY_LIMIT=-1 composer install
 
 script:
     - phpunit --configuration phpunit.xml.dist --coverage-text
